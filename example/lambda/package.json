@@ -1,0 +1,9 @@
+{
+  "name": "init-stage-example-lambda",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "aws-xray-sdk-core": "^2.5.0",
+    "init-stage": "file:../../init-stage-0.1.0.tgz"
+  }
+}

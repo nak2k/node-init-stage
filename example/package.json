@@ -1,0 +1,32 @@
+{
+  "name": "init-stage-example",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "author": "Kengo Nakatsuka <kengo.nakatsuka@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/nak2k/node-init-stage/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@aws-cdk/aws-lambda": "^1.20.0",
+    "@aws-cdk/core": "^1.20.0",
+    "aws-cdk": "^1.20.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  },
+  "homepage": "https://github.com/nak2k/node-init-stage",
+  "keywords": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nak2k/node-init-stage.git"
+  },
+  "scripts": {
+    "build": "npm run build:parent && npm run build:example",
+    "build:parent": "cd .. && npm run build && npm pack",
+    "build:example": "cd lambda && npm i ../../init-stage-*.tgz && tsc",
+    "predeploy": "npm run build",
+    "deploy": "cdk deploy"
+  }
+}

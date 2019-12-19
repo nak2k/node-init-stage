@@ -1,0 +1,3 @@
+{
+  "app": "npx ts-node cdk.src/cdk-app.ts"
+}
