@@ -55,7 +55,7 @@ function getContext(): Context {
   global.setImmediate = firstSetImmediate;
 
   /*
-   * Create the context onbject and store into the global object.
+   * Create the context object and store into the global object.
    */
   return (global as any)[CONTEXT_SYMBOL] = {
     originalSetImmediate,
