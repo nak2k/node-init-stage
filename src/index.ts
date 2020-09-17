@@ -1,4 +1,6 @@
-import { Subsegment, Segment } from 'aws-xray-sdk-core';
+import type { Subsegment, Segment } from 'aws-xray-sdk-core';
+
+type SetImmediateType = typeof global.setImmediate;
 
 /*
  * The symbol to store the context object into the global object.
@@ -52,7 +54,7 @@ function getContext(): Context {
    */
   const originalSetImmediate = global.setImmediate;
 
-  global.setImmediate = firstSetImmediate;
+  global.setImmediate = firstSetImmediate as SetImmediateType;
 
   /*
    * Create the context object and store into the global object.
@@ -81,7 +83,7 @@ function firstSetImmediate(callback: (...args: any[]) => void, ...args: any[]) {
   /*
    * Restore setImmediate() because the first replacing done the purpose.
    */
-  global.setImmediate = originalSetImmediate;
+  global.setImmediate = originalSetImmediate as SetImmediateType;
 
   return originalSetImmediate(() => context.lastPromise.finally(() => {
     /*
@@ -95,7 +97,7 @@ function firstSetImmediate(callback: (...args: any[]) => void, ...args: any[]) {
 
     if (initStageSubsegment) {
       (initStageSubsegment as any).end_time = Date.now() / 1000;
-      global.setImmediate = secondSetImmediate;
+      global.setImmediate = secondSetImmediate as SetImmediateType;
     }
 
     /*
@@ -117,7 +119,7 @@ function firstSetImmediate(callback: (...args: any[]) => void, ...args: any[]) {
 function secondSetImmediate(callback: (...args: any[]) => void, ...args: any[]) {
   const { originalSetImmediate } = getContext();
 
-  global.setImmediate = originalSetImmediate;
+  global.setImmediate = originalSetImmediate as SetImmediateType;
 
   if (process.env._X_AMZN_TRACE_ID) {
     const segment: Segment = require('aws-xray-sdk-core').getSegment();
